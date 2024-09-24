@@ -1,0 +1,115 @@
+menu "My Project Config"
+
+    menu "LCD Config"
+        comment "config spi display stuff."
+        choice SPI_DISPLAY_TYPE
+        prompt "LCD Display Type:"
+            default SPI_DISPLAY_SSD1680_1IN54
+            help
+                  Select the display driver type.
+            config SPI_DISPLAY_SSD1680_1IN54
+                bool "SPI_DISPLAY_SSD1680_1IN54"
+            config SPI_DISPLAY_SSD1680_1IN54_V1
+                bool "SPI_DISPLAY_SSD1680_1IN54_V1"
+            config SPI_DISPLAY_ST7789
+                bool "SPI_DISPLAY_ST7789"
+        endchoice
+
+        config DISP_SPI_MOSI
+            int "GPIO for MOSI (Master Out Slave In)"
+            default 10 if IDF_TARGET_ESP32C3
+            default 11 if !IDF_TARGET_ESP32C3
+
+        config DISP_SPI_MISO
+            int "GPIO for MISO (Master In Slave Out)"
+            default -1
+
+            help
+                Configure the display MISO pin here.
+
+        config DISP_SPI_CLK
+            int "GPIO for CLK (SCK / Serial Clock)"
+            default 4 if IDF_TARGET_ESP32C3
+            default 12 if !IDF_TARGET_ESP32C3
+
+            help
+                Configure the display CLK pin here.
+
+        config DISP_SPI_CS
+            int "GPIO for CS (Slave Select)"
+            default 5 if IDF_TARGET_ESP32C3
+            default 10 if !IDF_TARGET_ESP32C3
+
+            help
+                Configure the display CS pin here.
+
+        config DISP_PIN_DC
+            int "GPIO for DC (Data / Command)"
+            default 6 if IDF_TARGET_ESP32C3
+            default 9 if !IDF_TARGET_ESP32C3
+
+            help
+                Configure the display DC pin here.
+
+        config DISP_PIN_RST
+            int "GPIO for Reset"
+            default 7 if IDF_TARGET_ESP32C3
+            default 1 if !IDF_TARGET_ESP32C3
+
+            help
+                Configure the display Reset pin here.
+
+        config DISP_PIN_BLK
+            depends on SPI_DISPLAY_ST7789
+            int "GPIO for backlight control"
+            default 2
+
+            help
+                Configure the display backlight pin here.
+
+        config DISP_PIN_BUSY
+            depends on SPI_DISPLAY_SSD1680_1IN54 || SPI_DISPLAY_SSD1680_1IN54_V1
+            int "GPIO for Busy"
+            default 8 if IDF_TARGET_ESP32C3
+            default 2 if !IDF_TARGET_ESP32C3
+
+            help
+                Configure the display Busy pin here.
+
+    endmenu
+
+    menu "BLE Device Config"
+        comment "config ble device"
+
+        config ENABLE_BLE_DEVICES
+            bool "enable ble devices"
+    endmenu
+
+    menu "WIFI Config"
+
+        config WIFI_SSID
+            string "WiFi SSID"
+            default "smart_box"
+            help
+                AP Mode SSID (network name).
+
+        config WIFI_PASSWORD
+            string "WiFi Password"
+            default "12345678"
+            help
+                WiFi password.
+        config WIFI_CHANNEL
+            int "WiFi Channel"
+            range 1 13
+            default 1
+            help
+                WiFi channel (network channel).
+
+        config MAX_STA_CONN
+            int "Maximal STA connections"
+            default 2
+            help
+                Max number of the STA connects to AP.
+    endmenu
+
+endmenu
