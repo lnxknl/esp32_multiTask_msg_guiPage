@@ -312,7 +312,7 @@ static void battery_task_entry(void *arg) {
             ESP_LOGI(TAG, "ADC%d Channel[%d] Raw Data: %d", ADC_UNIT_1 + 1, ADC1_CHAN1, _adc_raw);
         }
 
-        vTaskDelay(pdMS_TO_TICKS(45000));
+        vTaskDelay(pdMS_TO_TICKS(45000));// @NOTE 
     }
 
     //Tear Down
@@ -322,7 +322,7 @@ static void battery_task_entry(void *arg) {
     }
 }
 
-void battery_init(void) {
+void battery_init(void) {// @NOTE 
     TaskHandle_t tsk_hdl;
     /* Create NMEA Parser task */
     BaseType_t err = xTaskCreate(

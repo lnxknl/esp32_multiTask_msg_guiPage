@@ -154,7 +154,7 @@ static void guiTask(void *pvParameter) {
         page_manager_init("temperature");
     }
 
-    x_update_notify_handl = xTaskGetCurrentTaskHandle();
+    x_update_notify_handl = xTaskGetCurrentTaskHandle();// @NOTE 
 
     spi_driver_init(TFT_SPI_HOST,
                     DISP_SPI_MISO, DISP_SPI_MOSI, DISP_SPI_CLK,
@@ -272,7 +272,7 @@ static void guiTask(void *pvParameter) {
     vTaskDelete(NULL);
 }
 
-void request_display_update_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t event_id,
+void request_display_update_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t event_id,// @NOTE 
                                     void *event_data) {
     if (BIKE_REQUEST_UPDATE_DISPLAY_EVENT == event_base) {
         if (updating) {
@@ -281,13 +281,14 @@ void request_display_update_handler(void *event_handler_arg, esp_event_base_t ev
         } else {
             //ESP_LOGI(TAG, "request for update...");
             int *full_update = (int *) event_data;
-            xTaskGenericNotify(x_update_notify_handl, 0, *full_update,
+// wirte a freertos function usage example
+            xTaskGenericNotify(x_update_notify_handl, 0, *full_update,// @NOTE 
                                eIncrement, NULL);
         }
     }
 }
 
-static void key_click_event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t event_id,
+static void key_click_event_handler(void *event_handler_arg, esp_event_base_t event_base, int32_t event_id,// @NOTE 
                                     void *event_data) {
     //ESP_LOGI(TAG, "rev key click event %ld", event_id);
     // if menu exist
@@ -309,7 +310,7 @@ static void key_click_event_handler(void *event_handler_arg, esp_event_base_t ev
     }
 
     // finally pass here
-    switch (event_id) {
+    switch (event_id) {// @NOTE 
         case KEY_1_SHORT_CLICK:
             break;
         case KEY_2_SHORT_CLICK:
@@ -339,14 +340,14 @@ static void key_click_event_handler(void *event_handler_arg, esp_event_base_t ev
     ESP_LOGI(TAG, "no page handler key click event %ld", event_id);
 }
 
-void display_init(uint32_t boot_count) {
+void display_init(uint32_t boot_count) {// @NOTE 
     boot_cnt = boot_count;
 
     // uxPriority 0 最低
     xTaskCreate(guiTask, "gui", 4096 * 2, NULL, 1, NULL);
 
     // key click event
-    esp_event_handler_register_with(event_loop_handle,
+    esp_event_handler_register_with(event_loop_handle,// @NOTE 
                                     BIKE_KEY_EVENT, ESP_EVENT_ANY_ID,
                                     key_click_event_handler, NULL);
 

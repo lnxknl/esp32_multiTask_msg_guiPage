@@ -25,7 +25,7 @@ static int8_t menu_index = -1;
 
 RTC_DATA_ATTR static int8_t current_page_index = -1;
 
-static page_inst_t pages[] = {
+static page_inst_t pages[] = {// @NOTE 
         [TEMP_PAGE_INDEX] = {
                 .page_name = "temperature",
                 .on_draw_page = temperature_page_draw,
@@ -115,7 +115,7 @@ static page_inst_t menus[] = {
 void page_manager_init(char *default_page) {
     // reset to -1 when awake from deep sleep
     current_page_index = -1;
-    page_manager_switch_page(default_page);
+    page_manager_switch_page(default_page);// @NOTE 
 }
 
 int8_t page_manager_get_current_index() {

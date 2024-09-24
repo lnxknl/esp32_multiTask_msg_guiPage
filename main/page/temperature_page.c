@@ -71,12 +71,12 @@ static void temp_sensor_event_handler(void *arg, esp_event_base_t event_base, in
 void temperature_page_on_create(void *args) {
     ESP_LOGI(TAG, "=== on create ===");
     esp_event_handler_register_with(event_loop_handle,
-                                    BIKE_TEMP_HUM_SENSOR_EVENT, ESP_EVENT_ANY_ID,
+                                    BIKE_TEMP_HUM_SENSOR_EVENT, ESP_EVENT_ANY_ID,// @NOTE 
                                     temp_sensor_event_handler, NULL);
     sht31_init();
 }
 
-void temperature_page_on_destroy(void *args) {
+void temperature_page_on_destroy(void *args) {// @NOTE 
     ESP_LOGI(TAG, "=== on destroy ===");
     esp_event_handler_unregister_with(event_loop_handle,
                                       BIKE_TEMP_HUM_SENSOR_EVENT, ESP_EVENT_ANY_ID,

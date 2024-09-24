@@ -74,7 +74,7 @@ static void key_task_entry(void *arg) {
     ESP_ERROR_CHECK(esp_timer_create(&timer_args_2, &timers[1]));
 
     while (1) {
-        if (xQueueReceive(event_queue, &clicked_gpio, portMAX_DELAY)) {
+        if (xQueueReceive(event_queue, &clicked_gpio, portMAX_DELAY)) {// @NOTE 
             // vTaskDelay(pdMS_TO_TICKS(2));
             uint8_t index = KEY_1_NUM == clicked_gpio ? 0 : 1;
 

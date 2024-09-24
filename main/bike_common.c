@@ -12,7 +12,7 @@ inline esp_err_t common_post_event(esp_event_base_t event_base, int32_t event_id
 }
 
 inline esp_err_t
-common_post_event_data(esp_event_base_t event_base, int32_t event_id, const void *event_data, size_t event_data_size) {
+common_post_event_data(esp_event_base_t event_base, int32_t event_id, const void *event_data, size_t event_data_size) {// @NOTE  send data
     return esp_event_post_to(event_loop_handle, event_base, event_id,
                              event_data, event_data_size, 100 / portTICK_PERIOD_MS);
 }
